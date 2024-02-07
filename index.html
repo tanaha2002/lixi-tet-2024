@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        .random-button {
+            position: absolute;
+            top: 50%;
+            left: 40%;
+            color: black;
+            transform: translate(-50%, -50%);
+            padding: 10px;
+            background-color: #ccc;
+            border: none;
+            cursor: pointer;
+         
+        }
+
+        .yes-button {
+            position: absolute;
+            top: 50%;
+            left: 60%;
+            color: black;
+            transform: translate(-50%, -50%);
+            padding: 10px;
+            background-color: #ccc;
+            border: none;
+            cursor: pointer;
+    
+        }
+
+        .random-button:hover {
+            transform: translate(-50%, -50%) scale(1.2);
+        }
+        .comic-button {
+            display: inline-block;
+            padding:  30px 40px;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            color: #fff;
+            background-color: #ff5252;
+            border: 2px solid #000;
+            border-radius: 10px;
+            box-shadow: 5px 5px 0px #000;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            }
+
+            .comic-button:hover {
+            background-color: #fff;
+            color: #ff5252;
+            border: 2px solid #ff5252;
+            box-shadow: 5px 5px 0px #ff5252;
+            }
+
+            .comic-button:active {
+            background-color: #fcf414;
+            box-shadow: none;
+            transform: translateY(4px);
+            }
+
+            #myVideo {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -1;
+            }
+
+            /*ANIMATION*/
+            .glitch {
+                position: relative;
+                font-size: 25px;
+                font-weight: 700;
+                line-height: 1.2;
+                color: #fff;
+                letter-spacing: 5px;
+                z-index: 1;
+                animation: shift 1s ease-in-out infinite alternate;
+                }
+
+                .glitch:before,
+                .glitch:after {
+                display: block;
+                content: attr(data-glitch);
+                position: absolute;
+                top: 0;
+                left: 0;
+                opacity: 0.8;
+                }
+
+                .glitch:before {
+                animation: glitch 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+                color: #8b00ff;
+                z-index: -1;
+                }
+
+                .glitch:after {
+                animation: glitch 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both infinite;
+                color: #00e571;
+                z-index: -2;
+                }
+
+                @keyframes glitch {
+                0% {
+                    transform: translate(0);
+                }
+
+                20% {
+                    transform: translate(-3px, 3px);
+                }
+
+                40% {
+                    transform: translate(-3px, -3px);
+                }
+
+                60% {
+                    transform: translate(3px, 3px);
+                }
+
+                80% {
+                    transform: translate(3px, -3px);
+                }
+
+                to {
+                    transform: translate(0);
+                }
+                }
+
+                @keyframes shift {
+                0%, 40%, 44%, 58%, 61%, 65%, 69%, 73%, 100% {
+                    transform: skewX(0deg);
+                }
+
+                41% {
+                    transform: skewX(10deg);
+                }
+
+                42% {
+                    transform: skewX(-10deg);
+                }
+
+                59% {
+                    transform: skewX(40deg) skewY(10deg);
+                }
+
+                60% {
+                    transform: skewX(-40deg) skewY(-10deg);
+                }
+
+                63% {
+                    transform: skewX(10deg) skewY(-5deg);
+                }
+
+                70% {
+                    transform: skewX(-50deg) skewY(-20deg);
+                }
+
+                71% {
+                    transform: skewX(10deg) skewY(-10deg);
+                }
+                }
+                .container {
+                    position: fixed;
+                    top: 70%;
+                    left: 40%;
+                    }
+                    
+
+           
+
+    
+            
+    </style>
+</head>
+<body >
+    
+    <video autoplay loop muted id="myVideo">
+        <source src="./data/background.mp4" type="video/mp4">
+    </video>
+    
+    <audio autoplay>
+        <source src="./data/background.ogg" type="audio/ogg">
+    </audio>
+    
+    
+    
+      
+    <img src="./data/smile.png" style=" position: relative; left:40%; width: 20%; height: 20%; z-index: -1;">
+    <button class="random-button comic-button">Đéo!</button>
+    <button class="yes-button comic-button">Lì xì!</button>
+    <div class="container">
+        <div class="loader">
+            <div data-glitch="CHÚC MỪNG NĂM MỚI..." class="glitch">CHÚC MỪNG NĂM MỚI...</div>
+         </div>
+         <div class="loader">
+            <div data-glitch="LÌ XÌ CHO MÌNH NHÉ..." class="glitch">LÌ XÌ CHO MÌNH NHÉ...</div>
+         </div>
+    </div>
+    
+    
+
+    <script>
+        const button = document.querySelector('.random-button');
+        const yesButton = document.querySelector('.yes-button');
+        let hover = -1;
+
+        button.addEventListener('mouseover', () => {
+            hover++;
+
+            // if hover first time swap position of two buttons, else move randomly
+            if (hover === 0) {
+                const buttonRect = button.getBoundingClientRect();
+                const yesButtonRect = yesButton.getBoundingClientRect();
+
+                const posX_button = buttonRect.left;
+
+                const posX_yesButton = yesButtonRect.left;
+
+
+                button.style.left = `${posX_yesButton}px`;
+
+                yesButton.style.left = `${posX_button +50}px`;
+
+            }
+            else if (hover === 5) {
+                //add hidden class to button
+                button.classList.add('hidden');
+                button.style.display = 'none';
+            }
+            else {
+                const curX = parseFloat(window.getComputedStyle(button).left);
+                const curY = parseFloat(window.getComputedStyle(button).top);
+                const minDistance = 100; // Minimum distance the button should move away from its current position
+                const margin = 50; // Margin from the edges of the screen
+
+                // Calculate random coordinates within the visible area of the screen
+                const randomX = Math.floor(Math.random() * (window.innerWidth - margin * 2)) + margin;
+                const randomY = Math.floor(Math.random() * (window.innerHeight - margin * 2)) + margin;
+
+                // Ensure the button moves at least a minimum distance away from its current position
+                const dx = randomX - curX;
+                const dy = randomY - curY;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                if (distance < minDistance) {
+                    const angle = Math.atan2(dy, dx);
+                    const newX = curX + minDistance * Math.cos(angle);
+                    const newY = curY + minDistance * Math.sin(angle);
+                    button.style.left = `${newX}px`;
+                    button.style.top = `${newY}px`;
+                } else {
+                    button.style.left = `${randomX}px`;
+                    button.style.top = `${randomY}px`;
+                }
+
+                // increase size of yesButton from right and bottom
+                const currentWidth = parseInt(window.getComputedStyle(yesButton).width);
+                const newWidth = currentWidth + 50; // You can adjust this value as needed
+                yesButton.style.width = `${newWidth}px`;
+                const currentHeight = parseInt(window.getComputedStyle(yesButton).height);
+                const newHeight = currentHeight + 30; // You can adjust this value as needed
+                yesButton.style.height = `${newHeight}px`;
+                
+                //move yesButton to the right to make it center
+                const currentLeft = parseInt(window.getComputedStyle(yesButton).left);
+                const newLeft = currentLeft + 50; // You can adjust this value as needed
+                yesButton.style.left = `${newLeft}px`;
+
+                
+                
+                
+                yesButton.style.textAlign = 'center';
+                //increase font size of yesButton
+                const currentFontSize = parseInt(window.getComputedStyle(yesButton).fontSize);
+                const newFontSize = currentFontSize + 5; // You can adjust this value as needed
+                yesButton.style.fontSize = `${newFontSize}px`;
+                
+                }
+            
+        });
+        yesButton.addEventListener('mouseover', () => {
+            //replace the img with a new one else uising back smile.png
+            
+            const img = document.querySelector('img');
+            img.src = './data/kekw.png';
+            img.style.left = '35%';
+            img.style.width = '25%';
+            img.style.height = '25%';
+
+            });
+        yesButton.addEventListener('mouseout', () => {
+            const img = document.querySelector('img');
+            img.src = './data/smile.png';
+            img.style.left = '40%';
+            img.style.width = '20%';
+            img.style.height = '20%';
+        });
+        //show a popup when click on yesButton with div contain 3 buttons
+        yesButton.addEventListener('click', () => {
+            const popup = document.createElement('div');
+            //ADD CLASS
+            popup.classList.add('popup');
+            popup.style.position = 'absolute';
+            popup.style.top = '50%';
+            popup.style.left = '50%';
+            popup.style.transform = 'translate(-50%, -50%)';
+            popup.style.backgroundColor = '#fff';
+            popup.style.border = '2px solid #000';
+            popup.style.borderRadius = '10px';
+            popup.style.padding = '50px';
+            popup.style.boxShadow = '5px 5px 0px #000';
+            popup.style.zIndex = '1000';
+            popup.style.display = 'flex';
+            popup.style.flexDirection = 'column';
+            popup.style.alignItems = 'center';
+            popup.style.justifyContent = 'center';
+            popup.style.width = '400px';
+            popup.style.height = '800px';
+            popup.style.textAlign = 'center';
+            popup.style.fontSize = '24px';
+            popup.style.fontWeight = 'bold';
+            popup.style.color = '#ff5252';
+            popup.style.backgroundColor = '#fff';
+            popup.style.border = '2px solid #000';
+            popup.style.borderRadius = '10px';
+            popup.style.boxShadow = '5px 5px 0px #000';
+            popup.style.transition = 'all 0.3s ease';
+            popup.style.cursor = 'pointer';
+            popup.innerHTML = `
+            <p> Chúc bạn một năm mới vui vẻ, hạnh phúc, thành công và may mắn!</p>
+            <p>  Cảm ơn vì đã lì xì nhé :3 </p>
+            <p> MOMO: 0886617378 </p>
+            <img src="./data/momo.jpg" style=" height: 600px;">
+            `;
+            document.body.appendChild(popup);
+            
+            
+
+        });
+        //remove popup when click outside of it
+        document.addEventListener('click', (e) => {
+            if (e.target !== yesButton) {
+                const popup = document.querySelector('.popup');
+                if (popup) {
+                    popup.remove();
+                }
+            }
+        });
+       
+        
+
+      
+       
+    </script>
+</body>
+</html>
