@@ -83,6 +83,11 @@
                 letter-spacing: 5px;
                 z-index: 1;
                 animation: shift 1s ease-in-out infinite alternate;
+                font-weight: bold;
+                /*  ADD FONT SHADOWN AND OUTLINE*/
+                text-shadow: -1px -1px 0 #000, 3px -1px 0 #000, -1px 3px 0 #000, 2px 2px 0 #000;
+            
+                
                 }
 
                 .glitch:before,
@@ -301,6 +306,10 @@
             img.style.width = '20%';
             img.style.height = '20%';
         });
+        button.addEventListener('click', () => {
+            //GO HIDDEN
+            button.classList.add('hidden');
+    });
         //show a popup when click on yesButton with div contain 3 buttons
         yesButton.addEventListener('click', () => {
             const popup = document.createElement('div');
